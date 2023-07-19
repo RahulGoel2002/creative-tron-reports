@@ -7,21 +7,36 @@ const App = () => {
 
     const [baseSales, setBaseSales] = useState(null)
     const [newInput, setNewInput] = useState(false)
+    const [profit, setProfit] = useState(0)
     const [finalProfit, setFinalProfit] = useState(0)
     const [blocks, setBlocks] = useState([])
 
     useEffect(() => {
         console.log(newInput, baseSales)
-        setFinalProfit(prevProfit => {
+        setProfit(prevProfit => {
             let x = 0;
             blocks.map(blk => {
-                if (blk.isBaseSales) x += blk.amount
-                else x -= blk.amount
+                if (blk.type === "sal") x += blk.amount
+                else if (blk.type === "exp") x -= blk.amount
                 return blk
             })
+            console.log(profit)
             return x
         })
-    }, [newInput, baseSales])
+
+        setFinalProfit(prev => {
+            let p = profit
+            blocks.every(blk => {
+                if (blk.type === "cut")
+                    p -= blk.amount
+                    return blk
+            })
+            return p
+        })
+
+    }, [newInput, baseSales, blocks])
+
+
 
     return (
         <div className={styles.app}>
@@ -37,8 +52,8 @@ const App = () => {
                         return <Block key={index} id={index} setBaseSales={setBaseSales} setBlocks={setBlocks} details={blk} />
                     })
                 }
-                {newInput ? <Block input baseSales={baseSales} setBlocks={setBlocks} setNewInput={setNewInput} setBaseSales={setBaseSales} />: null}
-                <Block createNew setNewInput={setNewInput} />
+                {newInput ? <Block input baseSales={baseSales} setBlocks={setBlocks} profit={profit} setNewInput={setNewInput} setBaseSales={setBaseSales} />: null}
+                <Block createNew setNewInput={setNewInput} profit={profit} />
             </div>
             </div>
             <footer>

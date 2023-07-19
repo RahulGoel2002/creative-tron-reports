@@ -2,7 +2,7 @@
     width: 95%;
     height: 100px;
     border-radius: 5px;
-    box-shadow: 0 0 3px 3px rgb(211, 211, 211);
+    box-shadow: 0 0 5px 5px rgb(234, 234, 234);
     display: flex;
     align-items: center;
     padding: 5px;
@@ -11,7 +11,7 @@
 }
 
 .block:hover {
-    box-shadow: 0 2px 3px 3px rgb(211, 211, 211);
+    box-shadow: 0 2px 5px 5px rgb(234, 234, 234);
     transition: box-shadow 150ms ease-in-out;
 }
 

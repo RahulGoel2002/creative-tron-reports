@@ -3,7 +3,7 @@ import styles from '../css/block.module.css'
 import CloseIcon from '@mui/icons-material/Close';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
-const Block = ({ input, setBlocks, setBaseSales, baseSales, createNew, details, id, setNewInput }) => {
+const Block = ({ input, profit, setBlocks, setBaseSales, baseSales, createNew, details, id, setNewInput }) => {
 
     const [cutInput, setCutInput] = useState("")
 
@@ -26,6 +26,7 @@ const Block = ({ input, setBlocks, setBaseSales, baseSales, createNew, details, 
                         name: "",
                         cut: Number(cutInput),
                         cutType: "",
+                        type: "sal",
                         isBaseSales: true,
                         date: (new Date().toDateString()),
                         amount: Number(cutInput)
@@ -42,6 +43,7 @@ const Block = ({ input, setBlocks, setBaseSales, baseSales, createNew, details, 
                     {
                         name: "",
                         cut: Number(cutInput),
+                        type: "exp",
                         cutType: "",
                         isBaseSales: false,
                         date: (new Date().toDateString()),
@@ -62,6 +64,23 @@ const Block = ({ input, setBlocks, setBaseSales, baseSales, createNew, details, 
                         isBaseSales: false,
                         date: (new Date().toDateString()),
                         amount: baseSales * Number(cutInput) / 100
+                    }]
+                })
+                return false
+            })
+        }
+        else if (e.target.name === "ct") {
+            setNewInput(prev => {
+                setBlocks(prev => {
+                    return [...prev,
+                    {
+                        name: "",
+                        cut: Number(cutInput),
+                        cutType: "%",
+                        type: "cut",
+                        isBaseSales: false,
+                        date: (new Date().toDateString()),
+                        amount: profit * Number(cutInput) / 100
                     }]
                 })
                 return false
@@ -97,6 +116,7 @@ const Block = ({ input, setBlocks, setBaseSales, baseSales, createNew, details, 
                         <button name="bs" onClick={handleButtonsClick}>Base</button>
                         <button name="rs" onClick={handleButtonsClick} className={styles.rsbtn}>{`₹`}</button>
                         <button name="pc" onClick={handleButtonsClick}>%</button>
+                        <button name="ct" onClick={handleButtonsClick}>cut</button>
                     </div>
                 </div>
                 <div className={`${styles.row} ${styles.price} ${styles.flexCenter}`}>{null}</div>
